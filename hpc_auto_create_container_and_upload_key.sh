@@ -58,9 +58,7 @@ if [[ $string == *"Permission denied"* ]]; then
 	echo resource_pid: $resource_pid
 
 	# 7. 建立 HPC CCS
-	#string="{\"name\":\"demobycjz\",\"project\":${project_id},\"type\":\"KUBERNETES:DOCKER\",\"steps\":[{\"stepname\":\"demobycjz\",\"dependency_policy\":\"AFTEROK\",\"command\":\"wget ${authorized_keys} -o /home/${account}/.ssh/authorized_keys --no-check-certificate\",\"image\":\"${container_name}\",\"flavor\":${resource_pid},\"runs\":\"1\",\"volumes\":[{\"type\":\"HOSTPATH\",\"path\":\"/fs01\",\"mountPath\":\"/work/${account}\"},{\"type\":\"HOSTPATH\",\"path\":\"/fs02\",\"mountPath\":\"/home/${account}\"}]}]}"
 	string="{\"name\":\"demobycjz\",\"project\":${project_id},\"type\":\"KUBERNETES:DOCKER\",\"steps\":[{\"stepname\":\"demobycjz\",\"dependency_policy\":\"AFTEROK\",\"command\":\"curl -k ${authorized_keys} -o /home/${account}/.ssh/authorized_keys\",\"image\":\"${container_name}\",\"flavor\":${resource_pid},\"runs\":\"1\",\"volumes\":[{\"type\":\"HOSTPATH\",\"path\":\"/fs01\",\"mountPath\":\"/work/${account}\"},{\"type\":\"HOSTPATH\",\"path\":\"/fs02\",\"mountPath\":\"/home/${account}\"}]}]}"
-
 	result=$(curl -s -X POST "https://apigateway.twcc.ai:443/api/v2/k8s-taichung-default/jobs/" \
 	-H "accept: application/json" \
 	-H "X-API-HOST: k8s-taichung-default" \
