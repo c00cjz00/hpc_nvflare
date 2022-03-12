@@ -57,7 +57,7 @@ if [[ $string == *"Permission denied"* ]]; then
 	resource_pid=$(echo $result | jq  -c  ".[]" | grep "${resource_name}" |jq -r '.id')
 	echo resource_pid: $resource_pid
 
-	# 7. 建立 HPC CCS
+	# 7. 建立 CCS
 	string="{\"name\":\"demobycjz\",\"project\":${project_id},\"type\":\"KUBERNETES:DOCKER\",\"steps\":[{\"stepname\":\"demobycjz\",\"dependency_policy\":\"AFTEROK\",\"command\":\"curl -k ${authorized_keys} -o /home/${account}/.ssh/authorized_keys\",\"image\":\"${container_name}\",\"flavor\":${resource_pid},\"runs\":\"1\",\"volumes\":[{\"type\":\"HOSTPATH\",\"path\":\"/fs01\",\"mountPath\":\"/work/${account}\"},{\"type\":\"HOSTPATH\",\"path\":\"/fs02\",\"mountPath\":\"/home/${account}\"}]}]}"
 	result=$(curl -s -X POST "https://apigateway.twcc.ai:443/api/v2/k8s-taichung-default/jobs/" \
 	-H "accept: application/json" \
@@ -69,14 +69,14 @@ if [[ $string == *"Permission denied"* ]]; then
 	echo running_pid $running_pid
 	sleep 5
 	
-	# 8. 啟動 HPC CCS
+	# 8. 啟動 CCS
 	curl -s -X POST "https://apigateway.twcc.ai:443/api/v2/k8s-taichung-default/jobs/${running_pid}/submit/" \
 	-H "accept: application/json" \
 	-H "X-API-HOST: k8s-taichung-default" \
 	-H "x-api-key: ${api_key}"
 	sleep 5
 
-	# 9. 刪除 HPC CCS
+	# 9. 刪除 CCS
 	curl -s -X DELETE "https://apigateway.twcc.ai:443/api/v2/k8s-taichung-default/jobs/${running_pid}/" \
 	-H "accept: application/json" \
 	-H "X-API-HOST: k8s-taichung-default" \
