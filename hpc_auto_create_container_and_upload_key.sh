@@ -1,12 +1,13 @@
 #!/bin/bash
 # 範例 bash hpc_key.sh , 完成後,即可以直接免用密碼上傳資料 scp demo.txt ${account}@${sftpServer}:~/demo.txt
 
-# twcc 任務型容器 置入public key
-# 先設定api key, 請先將 authorized_keys 放置一網路空間, 並修改下方authorized_keys位置, 系統會用 wget 下載
+########### CONFIG #############
+# 先設定api key, 請先將 authorized_keys 放置一網路空間 (例如github), 並修改下方authorized_keys位置, 系統會用 curl 下載至你開立的容器內, 以達到免用密碼上傳資料
 api_key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 project_name=GOV108019
 authorized_keys=https://raw.githubusercontent.com/c00cjz00/hpc_nvflare/main/cjz_id_rsa.pub.txt
-#authorized_keys=https://port.biobank.org.tw/cjz_id_rsa.pub
+########### CONFIG #############
+
 # 1. 取得 project_name 之 project_id 11833
 result=$(curl -s -X GET "https://apigateway.twcc.ai/api/v2/k8s-taichung-default/projects/" \
 -H "accept: application/json" \
