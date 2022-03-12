@@ -37,7 +37,7 @@ if [[ $string == *"Permission denied"* ]]; then
 	-H "X-API-HOST: harbor" \
 	-H "x-api-key: ${api_key}")
 	ngc_pid=$(echo $result | jq  -c  ".[]" | grep ngc |jq -r '.project_id')
-    echo ngc_pid $ngc_pid
+    	echo ngc_pid $ngc_pid
 	
 	# 5. 取得計算資源 ngc/nvidia/ubuntu-v1 或  ngc/nvidia/tensorrt-18.10-py2-v1 代號, 這邊使用 ngc/nvidia/tensorrt-18.10-py2-v1 -> 6
 	container_name=ngc/nvidia/tensorrt-18.10-py2-v1
